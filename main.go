@@ -18,7 +18,44 @@ type MemberResult struct {
 
 type Member struct {
   Id int
-  Name, Bio string
+  Name, Bio, Hometown string
+  OtherServices struct {
+    Twitter struct {
+      Identifier string
+    }
+    Linkedin struct {
+      Identifier string
+    }
+    Facebook struct {
+      Identifier string
+    }
+    Tumblr struct {
+      Identifier string
+    }
+    Flickr struct {
+      Identifier string
+    }
+  } `json:"other_services"`
+}
+
+func (m Member) SocialNetworkHandles() []string {
+  handles := make([]string, 0)
+  if m.OtherServices.Twitter.Identifier != "" {
+    handles = append(handles, m.OtherServices.Twitter.Identifier)
+  }
+  if m.OtherServices.Linkedin.Identifier != "" {
+    handles = append(handles, m.OtherServices.Linkedin.Identifier)
+  }
+  if m.OtherServices.Facebook.Identifier != "" {
+    handles = append(handles, m.OtherServices.Facebook.Identifier)
+  }
+  if m.OtherServices.Tumblr.Identifier != "" {
+    handles = append(handles, m.OtherServices.Tumblr.Identifier)
+  }
+  if m.OtherServices.Flickr.Identifier != "" {
+    handles = append(handles, m.OtherServices.Flickr.Identifier)
+  }
+  return handles
 }
 
 func fetchMembers() []Member {
@@ -58,6 +95,9 @@ func fetchMembers() []Member {
 func main() {
   members := fetchMembers()
   for _, member := range members {
-    fmt.Printf("%v: %v (%v)\n", member.Id, member.Name, member.Bio)
+    fmt.Printf("%v\n  %v\n", member.Name, member.Bio)
+    for _, handle := range member.SocialNetworkHandles() {
+      fmt.Printf("  %v\n", handle)
+    }
   }
 }
