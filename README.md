@@ -13,7 +13,7 @@ Retrieve your favorite Meetup.com group members and do some fun analytics with t
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/homma/fork )
+1. Fork it ( https://github.com/[my-github-username]/gomeetupanalytics/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
