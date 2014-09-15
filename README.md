@@ -4,9 +4,12 @@ Retrieve your favorite Meetup.com group members and do some fun analytics with t
 
 ## Setup
 
-1. Copy env.example to .env and fill in your favorite Meetup group ID and your Meetup API key from https://secure.meetup.com/meetup_api/key/.
-2. go build
-3. ./gomeetupanalytics
+1. go get github.com/sushengloong/gomeetupanalytics
+2. cd $GOPATH/src/github.com/sushengloong/gomeetupanalytics
+3. cp env.example .env
+4. Open .env and fill in your favorite Meetup group ID and your Meetup API key from https://secure.meetup.com/meetup_api/key/.
+5. go build
+6. ./gomeetupanalytics
 
 ## Contributing
 
