@@ -7,6 +7,7 @@ import (
   "io/ioutil"
   "encoding/json"
   "os"
+  "strings"
   "github.com/joho/godotenv"
 )
 
@@ -41,19 +42,39 @@ type Member struct {
 func (m Member) SocialNetworkHandles() []string {
   handles := make([]string, 0)
   if m.OtherServices.Twitter.Identifier != "" {
-    handles = append(handles, m.OtherServices.Twitter.Identifier)
+    twitterHandle := m.OtherServices.Twitter.Identifier
+    twitterHandle = strings.Replace(twitterHandle, "@", "", 1)
+    handles = append(handles, twitterHandle)
   }
   if m.OtherServices.Linkedin.Identifier != "" {
-    handles = append(handles, m.OtherServices.Linkedin.Identifier)
+    linkedinHandle := m.OtherServices.Linkedin.Identifier
+    parts := strings.Split(linkedinHandle, "/")
+    linkedinHandle = parts[len(parts) - 1]
+    handles = append(handles, linkedinHandle)
   }
   if m.OtherServices.Facebook.Identifier != "" {
-    handles = append(handles, m.OtherServices.Facebook.Identifier)
+    facebookHandle := m.OtherServices.Facebook.Identifier
+    parts := strings.Split(facebookHandle, "/")
+    facebookHandle = parts[len(parts) - 1]
+    handles = append(handles, facebookHandle)
   }
   if m.OtherServices.Tumblr.Identifier != "" {
-    handles = append(handles, m.OtherServices.Tumblr.Identifier)
+    tumblrHandle := m.OtherServices.Tumblr.Identifier
+    // TODO: learn golang replace by regex
+    tumblrHandle = strings.Replace(tumblrHandle, "http://", "", 1)
+    tumblrHandle = strings.Replace(tumblrHandle, "https://", "", 1)
+    parts := strings.Split(tumblrHandle, ".")
+    handles = append(handles, parts[0])
   }
   if m.OtherServices.Flickr.Identifier != "" {
-    handles = append(handles, m.OtherServices.Flickr.Identifier)
+    flickrHandle := m.OtherServices.Flickr.Identifier
+    parts := strings.Split(flickrHandle, "/")
+    lastIndex := len(parts) - 1
+    lastPart := parts[lastIndex]
+    if lastPart == "" && lastIndex != 0 {
+      lastPart = parts[lastIndex - 1]
+    }
+    handles = append(handles, lastPart)
   }
   return handles
 }
